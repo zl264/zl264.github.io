@@ -190,7 +190,7 @@
     // 获取每页的页码数
     var pageSize = '10'
     var useLeancloud = 'null'
-    var useComment = ('false' === 'true')
+    var useComment = ('true' === 'true')
     $.getJSON('/content.json', function (json) {
       $('#search-breadcrumb').append(`搜索'${s}'的结果`)
       var result = getArticles(s, 'posts', json).concat(getArticles(s, 'pages', json))
@@ -471,13 +471,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/10/11/Test-1/">Test</a>
+                    <a href="/2020/10/11/Test/">图片测试</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/10/11/Test/">图片测试</a>
+                    <a href="/2020/10/11/Test-1/">Test</a>
                 </span>
             </li>
             
@@ -628,5 +628,27 @@
 <script src="/js/oni.js"></script>
 
 
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Sun Oct 11 2020 15:41:23 GMT+0800'
+      window.commentConfig.owner = 'zl264# 必填项, 你的GitHub ID'
+      window.commentConfig.repo = 'blog_comments# 必填项  你的存储评论的repo'
+      window.commentConfig.client_id = '2757d836dba9f15c7df9'
+      window.commentConfig.client_secret = '6d4c2f7e72ed4e0f3955f059b31b2db297acbcda'
+      window.commentConfig.redirect_uri = 'null'
+    } else {
+      window.commentConfig = {
+      	id: 'Sun Oct 11 2020 15:41:23 GMT+0800',
+        owner: 'zl264# 必填项, 你的GitHub ID',
+        repo: 'blog_comments# 必填项  你的存储评论的repo',
+        client_id: '2757d836dba9f15c7df9',
+        client_secret: '6d4c2f7e72ed4e0f3955f059b31b2db297acbcda',
+        redirect_uri: 'null'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
 
 </html>
