@@ -32,59 +32,297 @@
         <div class="page-main-content">
 
             <div class="page-main-content-top">
-                <header class="header-wrapper">
+                @require "../common/variables.styl";
+@require "../common/magic-theme.styl";
+@require "../common/animated.styl";
 
-    <div class="header-content">
+$header-progress-height = 2.8px;
 
-        <a class="logo-title" href="/">
-            ZLBLOG
-        </a>
+.header-wrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-color);
+  padding-top: $header-progress-height;
+  transition();
 
-        <ul class="menu-list">
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/"
-                    >
-                        首页
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/archives"
-                    >
-                        归档
-                    </a>
-                </li>
-            
-        </ul>
+  if (hexo-config('magic.enable') == true) {
+    magic-style(1.02, 1.02);
+  }
 
-        <div class="menu-bar">
-            <div class="menu-bar-middle"></div>
-        </div>
-    </div>
+  .header-content {
+    width: $main-content-width;
+    height: 100%;
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-        </ul>
-    </div>
+    transition();
 
-    <div class="window-mask"></div>
+    +ils-tablet() {
+      width: $main-content-width-tablet !important;
+    }
 
-</header>
+    +ils-mobile() {
+      width: $main-content-width-mobile !important;
+    }
 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    z-index: $z-index-5;
+
+    .logo-title {
+      font-size: 2.2em;
+      font-weight: bold;
+
+      +ils-tablet() {
+        font-size: 2.0em;
+      }
+
+      +ils-mobile() {
+        font-size: 1.8em;
+      }
+
+      letter-spacing: 1px;
+      color: var(--first-text-color);
+      transition();
+    }
+
+    .menu-list {
+
+      +ils-tablet() {
+        display: none;
+      }
+
+      .menu-item {
+        float: left;
+        position: relative;
+        margin-left: 30px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        a {
+
+          &:hover {
+
+            color: var(--normal-text-color);
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -10px;
+              left: 50%;
+              width: 100%;
+              height: 2px;
+              transform: translateX(-50%);
+              background: var(--primary-color);
+              transition();
+            }
+          }
+
+        }
+
+
+        .active {
+          color: var(--second-text-color);
+          font-weight: bold;
+          transition();
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            transform: translateX(-50%);
+            background: var(--primary-color)
+            transition();
+          }
+        }
+      }
+
+    }
+
+
+    .menu-bar {
+      display: none;
+      position: relative;
+      cursor: pointer;
+
+      +ils-tablet() {
+        display: block;
+      }
+
+
+      .menu-bar-middle {
+        width: 18px;
+        height: 2px;
+        margin: 6px 0;
+        position: relative;
+        background: var(--normal-text-color);
+        transition();
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: -6px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: var(--normal-text-color);
+          transition();
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -6px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: var(--normal-text-color);
+          transition();
+        }
+      }
+    }
+  }
+
+
+  .header-drawer {
+    width: 100%;
+    padding: $header-height 0 20px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    background: var(--background-color);
+    transition();
+    z-index: $z-index-2;
+
+    .drawer-menu-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .drawer-menu-item {
+
+        a {
+          display: block;
+          margin: 8px auto;
+          padding: 0 20px;
+          border-radius: 20px;
+          text-align: center;
+          line-height: 34px;
+          color: var(--normal-text-color);
+          transition();
+
+          &:hover {
+            color: var(--second-text-color);
+            font-weight: bold;
+          }
+        }
+
+        .active {
+          border: 1px solid var(--normal-text-color);
+          color: var(--second-text-color);
+          font-weight: bold;
+        }
+
+      }
+    }
+  }
+
+
+  .window-mask {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: $z-index-1;
+    visibility: hidden;
+    opacity: 0;
+    transition();
+  }
+
+}
+
+
+.header-drawer-show {
+  opacity: 1 !important;
+
+  .header-content {
+    .menu-bar {
+      .menu-bar-middle {
+
+        background: transparent;
+
+        &::before {
+          transform: translateY(6px) rotate(45deg);
+        }
+
+
+        &::after {
+          transform: translateY(-6px) rotate(-45deg);
+        }
+      }
+    }
+  }
+
+  .header-drawer {
+    transform: scaleY(1);
+  }
+
+  .window-mask {
+    visibility: visible;
+    opacity: 1;
+  }
+
+}
+
+.header-wrapper-shrink {
+
+  if (hexo-config('magic.enable') == false) {
+    box-shadow: 0 1px 2px var(--border-color);
+  }
+
+  .header-content {
+
+    .logo-title {
+      transform: scale(0.8);
+      transform-origin: left top;
+    }
+
+    .menu-list {
+      .menu-item {
+        a:hover {
+          &::after {
+            bottom: -($header-shrink-height / 2 - 11);
+          }
+        }
+
+        .active::after {
+          bottom: -($header-shrink-height / 2 - 11);
+        }
+      }
+
+    }
+  }
+
+
+  .header-drawer {
+    padding: $header-shrink-height 0 20px 0;
+  }
+}
 
             </div>
 
@@ -166,52 +404,130 @@
                 <div class="comments-container">
     <div id="comment-anchor"></div>
     
-        
-    <div class="valine-container">
-        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-        <div id="vcomments"></div>
-        <script>
-            new Valine({
-                el: '#vcomments',
-                appId: 'sPy4KQjYJdmGmi7ver0ry86f-gzGzoHsz',
-                appKey: 'YHYAWV0XnzOgs0hENme52Qos',
-                meta: 'nick'.split(','),
-                avatar: 'wavatar',
-                enableQQ: true,
-                placeholder: '想说什么说什么',
-                lang: 'zh-CN'.toLowerCase()
-            });
+        @require '../../common/variables.styl'
+@require '../../common/animated.styl'
+
+.valine-container {
+
+  #vcomments {
+
+    .vwrap {
+
+      border: 1px solid var(--third-text-color);
+
+      .vheader {
+
+        .vinput {
+
+          color: var(--normal-text-color);
+          border-color: var(--third-text-color);
+
+          &:focus {
+            border-bottom: 1px dashed var(--primary-color) !important;
+          }
+        }
+      }
 
 
-            // Valine 评论列表增加"博主"标识
-            const getValineDomTimer = setInterval(() => {
-                const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
-                if (vcards.length > 0) {
+      .vedit {
 
-                    let author = 'ZL';
-                    if (author) {
-                        author = author.toLocaleLowerCase();
-                    }
+        .veditor {
+          color: var(--normal-text-color);
+        }
 
-                    let email = '2644765104@qq.com';
-                    if (email) {
-                        email = email.toLocaleLowerCase();
-                    }
+        .vctrl {
 
-                    for (let vcard of vcards) {
-                        const vnick = vcard.querySelector('.vhead .vnick');
-                        if (vnick.innerHTML.toLocaleLowerCase() === author) {
-                            vcard.classList.add('author');
-                        }
-                    }
-                    clearInterval(getValineDomTimer);
-                } else {
-                    clearInterval(getValineDomTimer);
-                }
-            }, 2000);
-        </script>
-    </div>
+          .vicon {
 
+            fill: var(--normal-text-color);
+
+            &.actived {
+              fill: var(--primary-color);
+            }
+          }
+        }
+
+      }
+
+      button.vsubmit {
+
+        background: transparent !important;
+        color: var(--normal-text-color) !important;
+        border: 1px solid var(--normal-text-color) !important;
+
+        &:hover {
+          color: var(--primary-color) !important;
+          border: 1px solid var(--primary-color) !important;
+        }
+      }
+
+
+    }
+
+
+    .vcount {
+      color: var(--normal-text-color);
+
+      .vnum {
+        color: var(--second-text-color);
+      }
+    }
+
+    .vcard {
+
+      // author
+
+      &.author {
+        .vnick {
+          font-weight: bold;
+
+          &::after {
+            font-weight: 500;
+            font-size: 12px;
+            content: '博主';
+            padding: 2px;
+            background: -webkit-linear-gradient(45deg, #e3565e, #ee854b, #f6c258, #90c68a, #5fb3b3, #6699cc, #c594c5);
+            background: linear-gradient(45deg, #e3565e, #ee854b, #f6c258, #90c68a, #5fb3b3, #6699cc, #c594c5);
+            color: #fff;
+            margin-left: 5px;
+            border-radius: 2px;
+          }
+        }
+      }
+
+      .vhead {
+
+        .vnick {
+          color: var(--primary-color);
+        }
+
+        .vsys {
+          color: var(--normal-text-color);
+          background: var(--fourth-text-color) !important;
+        }
+      }
+
+
+      .vcontent {
+        P {
+          color: var(--normal-text-color);
+        }
+      }
+
+      .vh {
+        border-bottom-color: var(--border-color);
+      }
+    }
+
+
+    .vcopy {
+      color: var(--third-text-color);
+    }
+
+  }
+
+
+}
 
     
 </div>
